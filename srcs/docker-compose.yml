@@ -1,0 +1,45 @@
+version: '3.8'
+
+services:
+  ngnix:
+    build: ./requirements/nginx
+    image: ngnix_service
+    container_name: ngnix_container
+    ports:
+      - "443:443"
+    volumes:
+      - wordpress_file:/var/www/html
+    networks:
+      - inception
+    depents_on:
+      - wordpress
+    restart: on-failure
+
+  wordpress:
+    build: ./requirements/wordpress
+    image: wordpress_service
+    container_name: wordpress_container
+    volumes:
+      - wordpress_file:/var/www/html
+    networks:
+      - inception
+    depents_on:
+      - mariadb
+    restart: on-failure
+
+  mariadb:
+    build: ./requirements/mariadb
+    image: mariadb_service
+    container_name: mariadb_container
+    volumes:
+      - mariadb_file:/var/lib/mysql
+    networks:
+      - inception
+    restart: on-failure
+
+volumes:
+  wordpress_file:
+  mariadb_file:
+
+networks:
+  name: inception
