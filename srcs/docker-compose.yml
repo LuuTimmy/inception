@@ -11,7 +11,7 @@ services:
       - wordpress_file:/var/www/html
     networks:
       - inception
-    depents_on:
+    depends_on:
       - wordpress
     restart: on-failure
 
@@ -23,7 +23,7 @@ services:
       - wordpress_file:/var/www/html
     networks:
       - inception
-    depents_on:
+    depends_on:
       - mariadb
     restart: on-failure
 
@@ -42,4 +42,4 @@ volumes:
   mariadb_file:
 
 networks:
-  name: inception
+  inception:

@@ -1,0 +1,27 @@
+FROM debian:buster
+
+RUN apt-get update && apt-get upgrade -y && apt-get install -y \
+    wget \
+    nginx \
+    php-fpm \
+    php-mysql \
+    php-mbstring \
+    php-xml \
+    php-gd \
+    php-curl \
+    php-zip
+
+RUN wget https://wordpress.org/latest.tar.gz \
+    && tar -xvf latest.tar.gz \
+    && rm latest.tar.gz \
+    && mv wordpress /var/www/html/wordpress \
+    && chown -R www-data:www-data /var/www/html/wordpress \
+    && chmod -R 755 /var/www/html/wordpress
+
+COPY ./conf/wordpress.conf /etc/php/7.3/fpm/pool.d/wordpress.conf
+
+RUN mkdir -p /run/php
+
+EXPOSE 9000
+
+CMD ["php-fpm7.3", "-F"]
