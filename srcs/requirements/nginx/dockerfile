@@ -4,10 +4,16 @@ RUN apt-get update \
     && apt-get upgrade -y \
     && apt-get install -y \
     && apt-get install -y nginx \
+    && apt-get install -y openssl \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
 COPY ./conf/nginx.conf /etc/nginx/nginx.conf
+RUN  mkdir /etc/nginx/ssl && \
+     openssl req -newkey rsa:4096 -x509 -sha256 -days 365 -nodes \
+     -out /etc/nginx/ssl/inception.pem \
+     -keyout /etc/nginx/ssl/inception.key \
+     -subj "/C=BE/ST=Bruxelles/L=Bruxelles/O=42 School/OU=inceptionCN=inception/"
 
 EXPOSE 443
 

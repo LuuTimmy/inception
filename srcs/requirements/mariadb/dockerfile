@@ -13,6 +13,10 @@ COPY ./conf/entrypoint.sh /conf/
 
 EXPOSE 3306
 
+RUN chmod +x /conf/entrypoint.sh \
+    && mkdir -p /run/mysqld \
+    && chown -R mysql: /var/run/mysqld
+
 ENTRYPOINT ["/conf/entrypoint.sh"]
 
-CMD ["mysqld", "--bind-address=0.0.0.0", "--init-file ./conf/init.sql"]
+CMD ["mysqld", "--bind-address=0.0.0.0", "--init-file=/conf/init.sql", "--verbose", "--console"]
