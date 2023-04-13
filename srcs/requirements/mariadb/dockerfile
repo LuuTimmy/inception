@@ -9,14 +9,9 @@ RUN apt-get update \
 COPY ./conf/mariadb.conf /etc/mysql/mariadb.conf
 COPY ./conf/init.sql /conf/
 
-COPY ./conf/entrypoint.sh /conf/
-
 EXPOSE 3306
 
-RUN chmod +x /conf/entrypoint.sh \
-    && mkdir -p /run/mysqld \
+RUN mkdir -p /run/mysqld \
     && chown -R mysql: /var/run/mysqld
 
-ENTRYPOINT ["/conf/entrypoint.sh"]
-
-CMD ["mysqld", "--bind-address=0.0.0.0", "--init-file=/conf/init.sql", "--verbose", "--console"]
+CMD ["mysqld", "--bind-address=0.0.0.0", "--init-file=/conf/init.sql"]
