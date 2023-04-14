@@ -21,6 +21,7 @@ services:
     container_name: wordpress_container
     volumes:
       - wordpress_file:/var/www/html
+      - ./.env:/var/www/html/.env
     networks:
       - inception
     depends_on:
