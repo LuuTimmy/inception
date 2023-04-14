@@ -37,7 +37,7 @@ services:
       - mariadb_file:/var/lib/mysql
     networks:
       - inception
-    restart: on-failure
+    restart: always
 
 volumes:
   wordpress_file:
