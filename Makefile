@@ -1,9 +1,13 @@
 all: build up
 
-build:
+dir:
+	mkdir -p /home/tluu/data/wordpress_file
+	mkdir -p /home/tluu/data/mariadb_file
+
+build: dir
 	docker-compose -f srcs/docker-compose.yml build
 
-up:
+up: dir
 	docker-compose -f srcs/docker-compose.yml up -d
 
 down:

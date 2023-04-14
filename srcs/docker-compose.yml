@@ -21,12 +21,13 @@ services:
     container_name: wordpress_container
     volumes:
       - wordpress_file:/var/www/html
-      - ./.env:/var/www/html/.env
     networks:
       - inception
     depends_on:
       - mariadb
     restart: always
+    env_file:
+      - .env
 
   mariadb:
     build: ./requirements/mariadb
@@ -40,7 +41,19 @@ services:
 
 volumes:
   wordpress_file:
+    name: wordpress_file
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/tluu/data/wordpress_file
   mariadb_file:
+    name: mariadb_file
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/tluu/data/mariadb_file
 
 networks:
   inception:
